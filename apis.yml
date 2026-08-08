@@ -1,23 +1,140 @@
 aid: axie-infinity
 name: Axie Infinity
-description: 'Axie Infinity is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Axie Infinity is a blockchain game franchise built by Sky Mavis on the Ronin
+  network, where players collect, breed and battle creatures called Axies across
+  titles including Axie Infinity: Origins, Homeland and Classic. Its
+  developer-facing surface is published through the Sky Mavis developer
+  platform: the Axie Infinity Origins API exposes read-only community game data
+  — cards, runes, charms, items, user fighter configurations, burned items,
+  seasons, season leaderboards and paginated battle logs — while the Axie
+  Experience Points (AXP) API lets partner games and dApps read and issue AXP,
+  the off-chain progression token that maps to on-chain Axie levels. Both are
+  REST products behind the api-gateway.skymavis.com gateway, authenticated with
+  an X-API-Key issued per application from the Ronin Developer Console, and both
+  require a per-service access grant requested in the console. Sky Mavis
+  publishes a rendered API reference for these products but no downloadable
+  OpenAPI description.
 url: https://raw.githubusercontent.com/api-evangelist/axie-infinity/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
 x-tier: stub
 x-tier-reason: harvest
+x-operated-by: sky-mavis
+x-related-providers:
+- sky-mavis
+- ronin-network
+x-enrichment:
+  date: '2026-08-06'
+  status: enriched
+  artifacts_added: 10
+  pass: local-v1
 specificationVersion: '0.20'
 created: '2026-08-06'
 modified: '2026-08-06'
 tags:
 - Company
-apis: []
+- Gaming
+- Blockchain
+- Web3
+- NFT
+- Game Data
+- Leaderboards
+- Ronin
+- Play to Earn
+apis:
+- name: Axie Infinity Origins API
+  description: >-
+    Read-only REST API for Axie Infinity: Origins community game data — list and
+    fetch cards, runes, charms and items; list a user's fighters and fighter
+    configurations; read burned items; list seasons and season detail; read
+    global and season leaderboards; and page through a user's battle logs.
+    Served from the Sky Mavis API gateway under /origins/v2 and authenticated
+    with an X-API-Key issued from the Ronin Developer Console.
+  humanURL: https://docs.skymavis.com/api/origins/origins-endpoints
+  baseURL: https://api-gateway.skymavis.com/origins/v2
+  tags:
+  - Gaming
+  - Game Data
+  - Leaderboards
+  - Blockchain
+  properties:
+  - type: Authentication
+    url: authentication/axie-infinity-authentication.yml
+  - type: Conventions
+    url: conventions/axie-infinity-conventions.yml
+  - type: ErrorCatalog
+    url: errors/axie-infinity-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/axie-infinity-rate-limits.yml
+- name: Axie Experience Points (AXP) API
+  description: >-
+    REST API for Axie Experience Points, the ecosystem-wide off-chain
+    progression system for Axies. Partner games and dApps read AXP balances for
+    up to 24 Axies at a time, read AXP by game, check AXP gained, and issue AXP
+    to Axies with a batched update call keyed on game_id + axie_id + timestamp.
+    Requires an app in the Ronin Developer Console plus an approved AXP service
+    permission.
+  humanURL: https://docs.skymavis.com/api/axp/axp-endpoints
+  baseURL: https://api-gateway.skymavis.com/axp
+  tags:
+  - Gaming
+  - Game Data
+  - Blockchain
+  properties:
+  - type: Authentication
+    url: authentication/axie-infinity-authentication.yml
+  - type: Conventions
+    url: conventions/axie-infinity-conventions.yml
+  - type: ErrorCatalog
+    url: errors/axie-infinity-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/axie-infinity-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/axie-infinity-domain-security.yml
 - type: Website
-  url: https://www.hiive.com/securities/axie-infinity-stock
+  url: https://axieinfinity.com/
+- type: DeveloperPortal
+  url: https://developers.roninchain.com/
+- type: Documentation
+  url: https://docs.skymavis.com/
+- type: APIReference
+  url: https://docs.skymavis.com/api
+- type: GettingStarted
+  url: https://docs.skymavis.com/get-started
+- type: SignUp
+  url: https://developers.roninchain.com/console/applications/
+- type: Support
+  url: https://support.axieinfinity.com/hc/en-us
+- type: Blog
+  url: https://blog.axieinfinity.com/
+- type: GitHubOrganization
+  url: https://github.com/axieinfinity
+- type: Whitepaper
+  url: https://whitepaper.axieinfinity.com/
+- type: TermsOfService
+  url: https://cdn.skymavis.com/files/skymavis-terms-of-use-09012025.pdf
+- type: PrivacyPolicy
+  url: https://cdn.skymavis.com/files/skymavis-privacypolicy-10122024.pdf
+- type: Authentication
+  url: authentication/axie-infinity-authentication.yml
+- type: Conventions
+  url: conventions/axie-infinity-conventions.yml
+- type: ErrorCatalog
+  url: errors/axie-infinity-problem-types.yml
+- type: RateLimits
+  url: rate-limits/axie-infinity-rate-limits.yml
+- type: Lifecycle
+  url: lifecycle/axie-infinity-lifecycle.yml
+- type: Conformance
+  url: conformance/axie-infinity-conformance.yml
+- type: Packages
+  url: packages/axie-infinity-packages.yml
+- type: LLMsTxt
+  url: llms/axie-infinity-llms.txt

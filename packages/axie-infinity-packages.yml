@@ -1,0 +1,63 @@
+generated: '2026-08-06'
+method: searched
+source: >-
+  npm registry search (text=axie, scope:axieinfinity, scope:sky-mavis), PyPI,
+  the github.com/axieinfinity organization repository listing, and the Sky Mavis
+  developer documentation
+packages:
+- language: javascript
+  registry: npm
+  name: '@axieinfinity/mixer'
+  version: 1.4.9
+  url: https://www.npmjs.com/package/@axieinfinity/mixer
+  repository: https://github.com/axieinfinity/fe-common-libs
+  install: npm install @axieinfinity/mixer
+  official: true
+  kind: domain-library
+  description: >-
+    Axie Infinity Mixer — first-party JavaScript library for Axie genetics
+    (gene mixing/parsing). Published under the @axieinfinity npm scope from the
+    axieinfinity/fe-common-libs monorepo; last published 2026-03-06.
+  api_client: false
+sdk_summary:
+  rest_client_libraries: 0
+  note: >-
+    Sky Mavis ships NO first-party client library for either Axie Infinity REST
+    product. The Origins and AXP APIs are documented as raw HTTP with curl
+    examples only. @axieinfinity/mixer is genuinely first-party and actively
+    maintained, but it is a domain library for Axie genetics, not a client for
+    the Origins or AXP APIs — so no `SDKs` pointer is emitted for this provider
+    and the sdk_count checks correctly read zero.
+adjacent_first_party:
+  note: >-
+    Sky Mavis does publish maintained SDKs under the @sky-mavis npm scope and the
+    github.com/skymavis organization (waypoint-js, waypoint-android,
+    waypoint-iOS, waypoint-unity, tanto-kit, tanto-connect, ronin-market-sdk,
+    katana-sdk). Those target Ronin Waypoint, wallet connection and the Ronin
+    marketplace — not the Axie Infinity game-data APIs — and are catalogued
+    under all/sky-mavis rather than duplicated here.
+community_packages_not_endorsed:
+- name: axie.js
+  registry: npm
+  official: false
+- name: axie-infinity-api-client
+  registry: npm
+  official: false
+- name: axie-tools
+  registry: npm
+  official: false
+- name: axie-mcp
+  registry: npm
+  official: false
+  note: >-
+    Community-built MCP server for Axie data. Not published or endorsed by Sky
+    Mavis; recorded here so it is not mistaken for an official agent surface.
+x-evidence:
+- url: https://registry.npmjs.org/@axieinfinity%2Fmixer
+  http_status: 200
+- url: https://registry.npmjs.org/-/v1/search?text=axie&size=25
+  http_status: 200
+- url: https://pypi.org/pypi/axie/json
+  http_status: 404
+- url: https://api.github.com/orgs/axieinfinity/repos
+  http_status: 200

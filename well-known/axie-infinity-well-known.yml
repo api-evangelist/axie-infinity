@@ -1,0 +1,83 @@
+generated: '2026-08-06'
+method: probed
+source: live GET probes of the /.well-known/ discovery surface on every Axie Infinity and gateway host
+result: none
+summary: >-
+  No /.well-known/ discovery document is published on any Axie Infinity or Sky
+  Mavis gateway host. The api-gateway.skymavis.com and docs.skymavis.com hosts
+  return a clean 404 for every path. The axieinfinity.com and
+  app.axieinfinity.com hosts sit behind a Cloudflare bot challenge that answers
+  403 to a non-browser client for every path including the site root, so those
+  rows are a challenge, not a confirmed absence. No `WellKnown` or `SecurityTxt`
+  pointer is emitted — nothing was found.
+hosts:
+- host: https://api-gateway.skymavis.com
+  reachable: true
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://docs.skymavis.com
+  reachable: true
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://axieinfinity.com
+  reachable: false
+  blocked_by: Cloudflare bot challenge (403 on every path, including /)
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/ai-plugin.json
+    status: 403
+- host: https://app.axieinfinity.com
+  reachable: false
+  blocked_by: Cloudflare bot challenge (403 on every path, including /)
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+x-note: >-
+  blog.axieinfinity.com does return 200 for
+  /.well-known/oauth-authorization-server, but that document is Substack's own
+  discovery metadata (issuer https://substack.com) served by the blogging
+  platform — it is not an Axie Infinity API surface and is deliberately not
+  recorded as a hit.

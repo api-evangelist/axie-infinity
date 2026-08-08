@@ -1,0 +1,75 @@
+generated: '2026-08-06'
+method: searched
+source: https://docs.skymavis.com/api/status-codes
+docs: https://docs.skymavis.com/api/status-codes
+format: vendor-json
+envelope:
+  content_type: application/json
+  shape: '{"errorCode": <int>, "message": "<string>"}'
+  rate_limit_shape: '{"message": "API rate limit exceeded"}'
+  gateway_shape: '{"message": "No API key found in request"}'
+  rfc9457: false
+  note: >-
+    Errors are a bare JSON object, not RFC 9457 application/problem+json. There
+    is no `type` URI, no `instance`, and no machine-readable error slug — the
+    numeric HTTP status is the only stable discriminator. Requests rejected at
+    the Kong gateway (missing/invalid key, unmatched route) return a
+    gateway-shaped body with only `message`, which differs from the
+    application-shaped body documented on the status-codes page.
+problems:
+- status: 400
+  title: Bad Request
+  detail: The request was invalid.
+- status: 401
+  title: Unauthorized
+  detail: >-
+    One or more security requirements were not met, such as incorrect API key,
+    invalid token, or missing authentication.
+  remediation: >-
+    Send the application key in the X-API-Key header (or the apiKey query
+    parameter). Keys are issued per app in the Ronin Developer Console.
+- status: 403
+  title: Forbidden
+  detail: >-
+    The request is valid, but the server is refusing to respond to it — commonly
+    the app lacks the necessary service permission in the Ronin Developer
+    Console.
+  remediation: >-
+    Request access to the service under your app > App Permission in the Ronin
+    Developer Console.
+- status: 404
+  title: Not Found
+  detail: The requested resource couldn't be found.
+- status: 429
+  title: Too Many Requests
+  detail: The request was refused due to rate limiting.
+  body: '{"message": "API rate limit exceeded"}'
+  remediation: >-
+    Back off and retry; request a rate-limit tier upgrade in the Ronin Developer
+    Console. See rate-limits/axie-infinity-rate-limits.yml.
+- status: 500
+  title: Internal Server Error
+  detail: >-
+    The server encountered an unexpected condition that prevented it from
+    fulfilling the request.
+  remediation: Email developersupport@skymavis.com.
+- status: 503
+  title: Service Unavailable
+  detail: >-
+    The server is currently unable to handle the request due to temporary
+    overloading or maintenance.
+  remediation: Retry later.
+x-evidence:
+- url: https://docs.skymavis.com/api/status-codes
+  http_status: 200
+- url: https://api-gateway.skymavis.com/origins/v2/openapi.json
+  http_status: 401
+  observed_body: '{"message":"No API key found in request"}'
+- url: https://api-gateway.skymavis.com/
+  http_status: 404
+  observed_body: '{"message":"no Route matched with those values"}'
+x-note: >-
+  The status-codes page also documents JSON-RPC error codes (-32700, -32600,
+  -32601, …) but those belong to the Ronin JSON-RPC product, not to the two
+  Axie Infinity REST products profiled here — see all/sky-mavis and
+  all/ronin-network.

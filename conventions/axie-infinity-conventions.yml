@@ -1,0 +1,109 @@
+generated: '2026-08-06'
+method: searched
+source: >-
+  https://docs.skymavis.com/api (base URL + reference), /api/authentication,
+  /api/rate-limits, /api/status-codes, and the per-endpoint Origins and AXP
+  reference pages, plus live probes of api-gateway.skymavis.com
+authentication:
+  style: API key
+  header: X-API-Key
+  query_alternative: apiKey
+  authorization: per-application service permission granted in the Ronin Developer Console
+  cross_ref: authentication/axie-infinity-authentication.yml
+base_url:
+  gateway: https://api-gateway.skymavis.com/
+  origins_prefix: /origins/v2
+  axp_prefix: /axp
+  note: >-
+    One documented Origins operation (Get Battle Logs By UserID) is published
+    with a singular `/origin/v2/...` prefix while every other Origins operation
+    uses `/origins/v2/...`. Recorded as published; not normalised here.
+versioning:
+  style: uri-path major version
+  current: v2
+  applies_to: Origins API
+  axp: unversioned path segments (/axp/get/..., /axp/update/...)
+  cross_ref: lifecycle/axie-infinity-lifecycle.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No Idempotency-Key contract is documented for either product. The one
+    documented write operation (POST /axp/update/update_axp) instead defines a
+    natural uniqueness key: "All updates have to be unique by game_id, axie_id,
+    and timestamp." That is a server-side de-duplication rule stated in the
+    reference, not a client-supplied idempotency key, so no Idempotency pointer
+    is emitted for this provider.
+pagination:
+  style: offset/limit on leaderboards; page/limit on battle logs
+  parameters:
+  - name: limit
+    used_by: GET /origins/v2/season-leaderboards (example 100), GET /origin/v2/community/users/:client_id/battle-logs (min 5, max 100)
+  - name: offset
+    used_by: GET /origins/v2/season-leaderboards (example 0)
+  - name: page
+    used_by: GET /origin/v2/community/users/:client_id/battle-logs (max 20)
+  - name: milestone
+    used_by: GET /origins/v2/season-leaderboards
+  response_envelope:
+    items_field: _items
+    etag_field: _etag
+    note: >-
+      List responses wrap results in an `_items` array and carry an `_etag`
+      string at both the envelope and per-item level. There is no documented
+      cursor or total-count field.
+  cross_ref: null
+caching:
+  etag: true
+  note: >-
+    Responses carry an Etag response header and an `_etag` field inside the JSON
+    envelope. Conditional-request semantics (If-None-Match) are not documented.
+batching:
+  supported: true
+  examples:
+  - 'GET /axp/get/get_axp accepts a comma-separated axie_ids list, max 24 items'
+  - 'POST /axp/update/update_axp accepts an axp_data_list array of {axie_id, xp, timestamp, metadata}'
+field_expansion:
+  supported: false
+metadata:
+  supported: true
+  note: >-
+    AXP update entries accept an optional free-form `metadata` JSON object
+    describing the AXP-granting action.
+request_id_tracing:
+  supported: false
+  note: >-
+    No provider-documented request-id or correlation header. Observed responses
+    carry Cloudflare CF-RAY, which is edge infrastructure and not a documented
+    support identifier.
+error_envelope:
+  shape: '{"errorCode": <int>, "message": "<string>"}'
+  rfc9457: false
+  cross_ref: errors/axie-infinity-problem-types.yml
+rate_limiting:
+  signalling: 'HTTP 429 with body {"message": "API rate limit exceeded"}'
+  headers: none documented
+  tiers: [Basic, Intermediate, Advanced]
+  cross_ref: rate-limits/axie-infinity-rate-limits.yml
+media_types:
+  request: application/json
+  response: application/json
+  accept_header_documented: true
+machine_readable_contract:
+  openapi: false
+  note: >-
+    The reference is rendered from an OpenAPI description at documentation build
+    time (Docusaurus OpenAPI docs), but the source document is not served: every
+    probed spec location on the docs host and the gateway host missed. See
+    x-coverage in apis.yml.
+x-evidence:
+- url: https://docs.skymavis.com/api
+  http_status: 200
+- url: https://docs.skymavis.com/api/rate-limits
+  http_status: 200
+- url: https://docs.skymavis.com/api/origins/get-season-leaderboard
+  http_status: 200
+- url: https://docs.skymavis.com/api/origins/get-battle-logs-by-user-id
+  http_status: 200
+- url: https://docs.skymavis.com/api/axp/update-axp
+  http_status: 200

@@ -1,0 +1,62 @@
+generated: '2026-08-06'
+method: searched
+source: >-
+  https://docs.skymavis.com/api + /deprecation-notice + live probes of the
+  status-page hosts
+versioning:
+  scheme: uri-path
+  current: v2
+  applies_to: Axie Infinity Origins API (/origins/v2)
+  axp: >-
+    The AXP API carries no version segment (/axp/get/…, /axp/update/…); there is
+    no published policy describing how a breaking AXP change would be shipped.
+  docs: https://docs.skymavis.com/api
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: >-
+    Sky Mavis publishes no deprecation POLICY covering the Axie Infinity Origins
+    or AXP APIs — no notice period, no Sunset/Deprecation header commitment
+    (RFC 8594), no versioned migration guarantee. What exists is a single
+    product deprecation NOTICE for a different gateway product (Skynet RPC,
+    Skynet Websocket/Webhooks and the Skynet Web3 API, sunset by the end of Q1
+    2025), which is an announcement rather than a standing policy and does not
+    cover the two Axie Infinity products. No `Deprecation` pointer is emitted
+    for this provider on the strength of that notice.
+  related_notice: https://docs.skymavis.com/deprecation-notice
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  note: >-
+    No reachable status page for Axie Infinity or the Sky Mavis API gateway.
+    skymavis.statuspage.io responds 302 and returns "Your page is inactive.
+    Please include an API key to access this resource." status.axieinfinity.com,
+    status.roninchain.com and status.skymavis.com do not resolve. No StatusPage
+    pointer is emitted.
+support:
+  developer_email: developersupport@skymavis.com
+  help_center: https://support.axieinfinity.com/hc/en-us
+changelog:
+  url: null
+  note: >-
+    No dated changelog or release-notes surface was found for the Origins or AXP
+    APIs. The Lunacian blog (blog.axieinfinity.com) carries game announcements,
+    not API change records.
+deprecated_operations: []
+x-evidence:
+- url: https://docs.skymavis.com/deprecation-notice
+  http_status: 200
+- url: https://skymavis.statuspage.io/
+  http_status: 302
+  observed_body: 'Your page is inactive. Please include an API key to access this resource.'
+- url: https://status.axieinfinity.com
+  http_status: 000
+  note: DNS does not resolve
+- url: https://status.roninchain.com
+  http_status: 000
+  note: DNS does not resolve
+- url: https://status.skymavis.com
+  http_status: 000
+  note: DNS does not resolve

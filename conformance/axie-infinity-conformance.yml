@@ -1,0 +1,91 @@
+generated: '2026-08-06'
+method: derived
+source: >-
+  Derived from the provider's published API reference
+  (https://docs.skymavis.com/api and the Origins/AXP endpoint pages) — no
+  OpenAPI description is published, so every assertion below is grounded in the
+  rendered documentation and in live probes rather than in a machine-readable
+  contract.
+standards:
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI/Swagger document is served. Probed /openapi.json, /openapi.yaml,
+    /swagger.json, /api-docs on docs.skymavis.com (all 404 HTML shells) and on
+    api-gateway.skymavis.com (401/404). The reference pages are built with the
+    Docusaurus OpenAPI docs plugin, so a source description exists at build time
+    but is not published.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    Both products authenticate with a static application API key
+    (X-API-Key header or apiKey query parameter). No OAuth2 flows, no token
+    endpoint, no scopes.
+- id: oidc
+  conforms: false
+  evidence: >-
+    No OpenID Connect surface on these products. Sky Mavis operates an OIDC
+    issuer for player accounts (Ronin Waypoint / athena.skymavis.com), profiled
+    under all/sky-mavis, but it does not authenticate the Origins or AXP APIs.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors are a bare JSON object {"errorCode": n, "message": "..."} served as
+    application/json; no application/problem+json, no `type` URI.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: >-
+    /.well-known/security.txt returns 404 (or a Cloudflare challenge) on
+    axieinfinity.com, app.axieinfinity.com, docs.skymavis.com and
+    api-gateway.skymavis.com.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset/Deprecation header commitment is documented.
+- id: graphql
+  conforms: partial
+  evidence: >-
+    A live GraphQL endpoint exists at
+    https://graphql-gateway.axieinfinity.com/graphql — it answers POST but
+    returns {"errors":[{"message":"introspection has been disabled",
+    "extensions":{"code":"INTROSPECTION_DISABLED"}}]}. It is not listed in the
+    Sky Mavis developer documentation and no schema is published, so it is
+    recorded as an observed but undocumented surface and is deliberately NOT
+    registered as an API in apis.yml.
+- id: rate-limiting
+  conforms: true
+  evidence: >-
+    Documented tiered rate limiting with a 429 response
+    (https://docs.skymavis.com/api/rate-limits). No RateLimit-* response headers
+    are documented.
+- id: pagination
+  conforms: true
+  evidence: >-
+    Documented offset/limit and page/limit query parameters on leaderboard and
+    battle-log operations; list responses use an `_items` envelope.
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No Idempotency-Key contract. The single documented write operation defines a
+    server-side uniqueness rule (game_id + axie_id + timestamp) instead.
+- id: etag-conditional-requests
+  conforms: partial
+  evidence: >-
+    Etag response header and `_etag` fields are present in documented examples,
+    but no If-None-Match / conditional-request semantics are documented.
+compliance_program:
+  published: false
+  certifications: []
+  note: >-
+    No trust center, compliance page, or named certification (SOC 2, ISO 27001,
+    PCI DSS, HIPAA, FedRAMP) was found for Axie Infinity or Sky Mavis. No
+    `Compliance` pointer is emitted.
+x-evidence:
+- url: https://graphql-gateway.axieinfinity.com/graphql
+  http_status: 200
+  observed_body: '{"errors":[{"message":"introspection has been disabled","extensions":{"code":"INTROSPECTION_DISABLED"}}]}'
+- url: https://docs.skymavis.com/openapi.json
+  http_status: 404
+- url: https://api-gateway.skymavis.com/origins/openapi.json
+  http_status: 401
+- url: https://docs.skymavis.com/api/rate-limits
+  http_status: 200

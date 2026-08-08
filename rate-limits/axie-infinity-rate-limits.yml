@@ -1,0 +1,41 @@
+generated: '2026-08-06'
+method: searched
+source: https://docs.skymavis.com/api/rate-limits
+docs: https://docs.skymavis.com/api/rate-limits
+applies_to:
+- Axie Infinity Origins API
+- Axie Experience Points (AXP) API
+model: per-application tier, set and viewed in the Ronin Developer Console
+exceeded:
+  http_status: 429
+  body: '{"message": "API rate limit exceeded"}'
+  headers: none documented
+tiers:
+- name: Basic
+  default: true
+  limit_count: null
+  upgrade: Self-serve from the app's Rate limit tab in the Ronin Developer Console.
+- name: Intermediate
+  default: false
+  limit_count: null
+  upgrade: >-
+    Self-serve upgrade from Basic when usage exceeds half of the current tier.
+- name: Advanced
+  default: false
+  limit_count: null
+  upgrade: >-
+    Restricted — available only to projects with a signed partnership agreement
+    with Sky Mavis, or to outstanding community projects.
+rate_limits: []
+x-note: >-
+  Sky Mavis publishes the tier structure and the 429 behaviour but not the
+  numeric request allowances for any tier — the actual limit is only visible
+  inside the authenticated Ronin Developer Console (app > Rate limit). No
+  limit_count values are asserted here because none are published; an empty
+  numeric list is the honest result, not a missing probe.
+console: https://developers.roninchain.com/console/applications/
+x-evidence:
+- url: https://docs.skymavis.com/api/rate-limits
+  http_status: 200
+- url: https://developers.roninchain.com/console/applications/
+  http_status: 200

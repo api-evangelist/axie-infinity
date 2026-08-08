@@ -1,0 +1,71 @@
+generated: '2026-08-06'
+method: searched
+source: https://docs.skymavis.com/api/authentication
+docs: https://docs.skymavis.com/api/authentication
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  - query
+  oauth2_flows: []
+  note: >-
+    Both Axie Infinity API products (Origins, AXP) are fronted by the Sky Mavis
+    API gateway and authenticate with a single application API key. There is no
+    OAuth2 / OIDC surface on these two products — Sky Mavis operates an OAuth2 /
+    OIDC service (Ronin Waypoint, athena.skymavis.com) but it authenticates
+    players into Ronin games, not these game-data APIs. No OpenAPI description is
+    published for either product, so this profile is transcribed from the
+    provider's published authentication reference rather than derived from
+    securitySchemes.
+schemes:
+- name: ApiKeyHeader
+  type: apiKey
+  in: header
+  parameter_name: X-API-Key
+  description: >-
+    Application API key issued per app from the Ronin Developer Console
+    (Applications > your app > Information tab > KEY).
+  source: https://docs.skymavis.com/api/authentication
+- name: ApiKeyQuery
+  type: apiKey
+  in: query
+  parameter_name: apiKey
+  description: >-
+    The same application API key may be appended as an `apiKey` query-string
+    parameter instead of the header. Documented by the provider as an
+    alternative; the header form is preferred because query strings are
+    routinely logged by intermediaries.
+  source: https://docs.skymavis.com/api/authentication
+key_issuance:
+  console: https://developers.roninchain.com/console/applications/
+  steps:
+  - Sign in to the Ronin Developer Console and select or create an application.
+  - Copy the KEY value from the application's Information tab.
+  - >-
+    Request access to the specific service (for example AXP service) under the
+    app's App Permission tab — a valid key alone does not grant access to every
+    gateway product.
+  rotation: Not documented publicly.
+authorization:
+  model: per-application service permissions granted in the Ronin Developer Console
+  scopes: none published
+  docs: https://docs.skymavis.com/axie/axp/overview
+  note: >-
+    AXP explicitly requires "Permission to use the AXP service", requested in the
+    console. A 403 from the gateway indicates the app lacks the service grant
+    rather than an invalid key.
+transport:
+  tls_required: true
+  base_url: https://api-gateway.skymavis.com/
+x-evidence:
+- url: https://docs.skymavis.com/api/authentication
+  http_status: 200
+- url: https://docs.skymavis.com/api
+  http_status: 200
+- url: https://api-gateway.skymavis.com/origins/openapi.json
+  http_status: 401
+  note: >-
+    Gateway rejects unauthenticated requests to any /origins/* path with
+    {"message":"No API key found in request"} — confirms the X-API-Key
+    requirement at the edge.

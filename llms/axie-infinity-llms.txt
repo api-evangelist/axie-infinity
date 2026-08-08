@@ -1,0 +1,102 @@
+# Axie Infinity
+
+> Axie Infinity is a blockchain game franchise built by Sky Mavis on the Ronin network. Its
+> developer-facing surface is published through the Sky Mavis developer platform as two REST
+> products behind `https://api-gateway.skymavis.com/`: the Axie Infinity Origins API (read-only
+> community game data) and the Axie Experience Points (AXP) API (read and issue AXP, the
+> ecosystem-wide off-chain progression token for Axies). Both authenticate with an `X-API-Key`
+> issued per application from the Ronin Developer Console, and both require a per-service access
+> grant requested in that console. No OpenAPI description is published for either product.
+
+Generated: 2026-08-06 · method: generated · source: apis.yml + this repository's artifacts +
+https://docs.skymavis.com/
+
+## APIs
+
+- [Axie Infinity Origins API](https://docs.skymavis.com/api/origins/origins-endpoints): Read-only
+  Origins game data — cards, runes, charms, items, user fighters and fighter configs, burned items,
+  seasons, leaderboards and battle logs. Base URL `https://api-gateway.skymavis.com/origins/v2`.
+- [Axie Experience Points (AXP) API](https://docs.skymavis.com/api/axp/axp-endpoints): Read AXP
+  balances (up to 24 Axies per call), read AXP by game, check AXP gained, and issue AXP in batches.
+  Base URL `https://api-gateway.skymavis.com/axp`.
+
+## Documented operations
+
+Origins (all GET, prefix `/origins/v2` unless noted):
+
+- `GET /origins/v2/community/cards` — list all cards
+- `GET /origins/v2/community/runes` — list all runes
+- `GET /origins/v2/community/runes/:rune` — get rune by id
+- `GET /origins/v2/community/charms` — list all charms
+- `GET /origins/v2/community/charms/:charm` — get charm by id
+- `GET /origins/v2/community/items` — list all items
+- `GET /origins/v2/community/items/:item` — get item by id
+- `GET /origins/v2/community/users/:user/items/burned` — get burned items for a user
+- `GET /origins/v2/community/users/fighters` — list a user's fighters
+- `GET /origins/v2/community/users/fighters/configs` — list a user's fighter configs
+- `GET /origins/v2/seasons` — list seasons
+- `GET /origins/v2/seasons/:season_id` — get season detail
+- `GET /origins/v2/leaderboards` — list leaderboards
+- `GET /origins/v2/season-leaderboards` — get season leaderboard (`limit`, `offset`, `milestone`)
+- `GET /origin/v2/community/users/:client_id/battle-logs` — paginated battle logs (`page` max 20,
+  `limit` 5–100). Published with the singular `/origin/` prefix in the provider reference.
+
+AXP:
+
+- `GET /axp/get/get_axp` — AXP for a comma-separated `axie_ids` list (max 24)
+- `GET /axp/get/get_axp_by_game` — AXP broken down by game
+- `GET /axp/get/check_axp_gained` — check AXP gained
+- `POST /axp/update/update_axp` — issue AXP; body `axp_data_list[]` of
+  `{axie_id, xp, timestamp, metadata?}`, unique by `game_id` + `axie_id` + `timestamp`
+
+## Authentication
+
+- [Authentication reference](https://docs.skymavis.com/api/authentication): `X-API-Key` request
+  header, or `apiKey` query parameter.
+- [Ronin Developer Console](https://developers.roninchain.com/console/applications/): create an
+  app, copy the KEY, and request the per-service permission (for example the AXP service).
+
+## Operating rules
+
+- Errors are a bare JSON object `{"errorCode": n, "message": "..."}` — not RFC 9457
+  `application/problem+json`. See [status codes](https://docs.skymavis.com/api/status-codes).
+- Rate limits are per-application tiers (Basic / Intermediate / Advanced) set in the developer
+  console; exceeding one returns `429` with `{"message": "API rate limit exceeded"}`. Numeric
+  allowances are not published. See [rate limits](https://docs.skymavis.com/api/rate-limits).
+- There is no `Idempotency-Key` contract. The one write operation de-duplicates server-side on
+  `game_id` + `axie_id` + `timestamp`.
+- List responses wrap results in an `_items` array and carry `_etag` values; pagination is
+  `limit`/`offset` on leaderboards and `page`/`limit` on battle logs.
+
+## Docs
+
+- [Sky Mavis documentation](https://docs.skymavis.com/)
+- [API reference index](https://docs.skymavis.com/api)
+- [Get started](https://docs.skymavis.com/get-started)
+- [AXP overview](https://docs.skymavis.com/axie/axp/overview)
+- [Developer portal](https://developers.roninchain.com/)
+- [Whitepaper](https://whitepaper.axieinfinity.com/)
+- [Blog (The Lunacian)](https://blog.axieinfinity.com/)
+- [Support](https://support.axieinfinity.com/hc/en-us) · developersupport@skymavis.com
+
+## API Evangelist artifacts
+
+- [Authentication profile](authentication/axie-infinity-authentication.yml)
+- [API conventions](conventions/axie-infinity-conventions.yml)
+- [Error catalog](errors/axie-infinity-problem-types.yml)
+- [Rate limits](rate-limits/axie-infinity-rate-limits.yml)
+- [Lifecycle](lifecycle/axie-infinity-lifecycle.yml)
+- [Conformance](conformance/axie-infinity-conformance.yml)
+- [Packages](packages/axie-infinity-packages.yml)
+- [Well-known probe results](well-known/axie-infinity-well-known.yml)
+
+## Not present
+
+- No OpenAPI/Swagger description is served for either product. The reference pages are built from
+  an OpenAPI source with the Docusaurus OpenAPI plugin, but the source document is not published.
+- No official MCP server, no A2A agent card, no first-party REST client SDK, no CLI, no webhook or
+  AsyncAPI event surface, no status page, no `/.well-known/` documents, no published deprecation
+  policy for these two products.
+- `https://graphql-gateway.axieinfinity.com/graphql` is live but undocumented, and introspection is
+  disabled (`INTROSPECTION_DISABLED`). It is not a published developer product and is not listed as
+  an API here.

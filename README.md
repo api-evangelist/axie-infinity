@@ -64,5 +64,100 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Axie Infinity is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.hiive.com/securities/axie-infinity-stock
+Axie Infinity is a blockchain game franchise built by Sky Mavis on the Ronin network, where players collect, breed and battle creatures called Axies across titles including Axie Infinity: Origins, Homeland and Classic. Its developer-facing surface is published through the Sky Mavis developer platform: the Axie Infinity Origins API exposes read-only community game data — cards, runes, charms, items, user fighter configurations, burned items, seasons, season leaderboards and paginated battle logs — while the Axie Experience Points (AXP) API lets partner games and dApps read and issue AXP, the off-chain progression token that maps to on-chain Axie levels. Both are REST products behind the api-gateway.skymavis.com gateway, authenticated with an X-API-Key issued per application from the Ronin Developer Console, and both require a per-service access grant requested in the console. Sky Mavis publishes a rendered API reference for these products but no downloadable OpenAPI description.
+
+**Areas:** Company · Gaming · Blockchain · Web3 · NFT · Game Data · Leaderboards · Ronin · Play-to-Earn
+
+## Axie Infinity on APIs.io
+
+Everything profiled for Axie Infinity is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/axie-infinity/](https://apis.io/providers/axie-infinity/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Axie Infinity Origins API](https://apis.io/apis/axie-infinity/axie-infinity-origins-api/) — Read-only REST API for Axie Infinity: Origins community game data — list and fetch cards, runes, charms and items; list a user's fighters and fighter…
+- [Axie Experience Points (AXP) API](https://apis.io/apis/axie-infinity/axie-experience-points-axp-api/) — REST API for Axie Experience Points, the ecosystem-wide off-chain progression system for Axies. Partner games and dApps read AXP balances for up to 24 Axies…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Axie Infinity Authentication](https://apis.io/security/axie-infinity/axie-infinity-authentication/)
+- [Axie Infinity Domain Security](https://apis.io/security/axie-infinity/axie-infinity-domain-security/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Axie Infinity Rate Limits](https://apis.io/rate-limits/axie-infinity/axie-infinity-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://axieinfinity.com/)
+- [Documentation](https://docs.skymavis.com/)
+- [Getting started](https://docs.skymavis.com/get-started)
+- [API reference](https://docs.skymavis.com/api)
+- [Sign up](https://developers.roninchain.com/console/applications/)
+- [Support](https://support.axieinfinity.com/hc/en-us)
+- [Blog](https://blog.axieinfinity.com/)
+- [Terms of service](https://cdn.skymavis.com/files/skymavis-terms-of-use-09012025.pdf)
+- [Privacy policy](https://cdn.skymavis.com/files/skymavis-privacypolicy-10122024.pdf)
+- [GitHub](https://github.com/axieinfinity)
+
+## API Evangelist rating
+
+**Kin Score 27.5** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 69.6 |
+| Contract quality | 0.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 57.1 |
+| Access clarity | 34.2 |
+
+**Agent readiness 7.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/axie-infinity/](https://apis.io/providers/axie-infinity/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Axie Infinity: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/axie-infinity/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
